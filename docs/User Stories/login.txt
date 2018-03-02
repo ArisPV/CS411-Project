@@ -1,0 +1,9 @@
+Log-in story 
+
+As a first-time user, I want to be prompted to log-in via Instagram so that I can begin using the app.
+
+As the first-time user opens the site, a message appears in the middle of the screen that prompts the user to log-in.
+When the user clicks the log-in button, a window appears that contains username and password fields for their instagram account.
+If the user enters a valid username and the correct password, the "log-in" message disappears, revealing the rest of the application.
+If the username/password does not match, the user will be prompted to try again.
+Until the user has successfully logged in, the rest of the site's features will not be accessible. 
