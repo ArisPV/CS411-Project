@@ -15,7 +15,7 @@ def json_parse_labels(json_file):
         label and a float number which is the percent likeliness the API has
         assigned to the label.
     """
-    #json_file = open(json_file,'r')
+    json_file = open(json_file,'r')
     json_data = json.load(json_file)
     label_annotations = json_data['labelAnnotations']
     

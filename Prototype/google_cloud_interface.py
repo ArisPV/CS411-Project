@@ -7,6 +7,7 @@ import os
 
 from json_parse import json_parse_labels
 import json
+from google.protobuf.json_format import MessageToJson
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="service_account.json"
 
@@ -37,14 +38,29 @@ DEBUG = False
 def analyze_file(filename):
 	# Instantiates a client
 	client = vision.ImageAnnotatorClient()
+
 	# The name of the image file to annotate
 	file_name = os.path.join(os.path.dirname(__file__), filename)
+	
 	# Loads the image into memory
 	with io.open(file_name, 'rb') as image_file:
 		content = image_file.read()
 	image = types.Image(content=content)
+	
 	# Performs label detection on the image file
 	response = client.label_detection(image=image)
-	print(response, file=open('response.json','a'))
-	#return json_parse_labels('response.json')
-	return response
+	serialized = MessageToJson(response)
+
+	# clear json file
+	open('response.json', 'w').close()
+	# now write to it
+	print(serialized, file=open('response.json','a'))
+	clean_data = json_parse_labels('response.json')
+	return clean_data
+
+
+
+
+
+
+

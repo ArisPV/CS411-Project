@@ -9,7 +9,8 @@
 	</form>
 	{% if file %}
 	<h3>Image uploaded successfully: {{ file }}</h3>
-	<p>{{ data }}</p>
+	<p>Analysis has concluded that this image contains: {{ data[0] }}.</p>
+	<p>Confidence in it's evaluation: {{ data[1] }} </p>
 	{% else %}
 	{% endif %}
 {% endblock %}
