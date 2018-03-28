@@ -3,8 +3,8 @@ import json
 
 # This is just to grab some json txt files for testing purposes. Feel free
 # to comment this out when assembling code.
-json_file = open('jsontest.txt', 'r')
-json_file.close
+#json_file = open('jsontest.txt', 'r')
+#json_file.close
 
 
 # This function takes the labels from the JSON file and returns the highest
@@ -15,7 +15,7 @@ def json_parse_labels(json_file):
         label and a float number which is the percent likeliness the API has
         assigned to the label.
     """
-    
+    #json_file = open(json_file,'r')
     json_data = json.load(json_file)
     label_annotations = json_data['labelAnnotations']
     
