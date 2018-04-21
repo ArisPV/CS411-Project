@@ -1,0 +1,97 @@
+For our planned data models, we decided on doing one of two possible solutions.
+
+1. We would use the Instagram username as a key for each user, and have the data stored in MongoDB using GridFS
+in the form of images. This would mean that we would have to call our backend function every single time we
+decided to run the algorithm on the user, and that would run the algorithm for each individual picture, which 
+would be incredibly inefficient. However there are many possible parameters that the Google Image Analysis API
+can possibly present us, so it is difficult to store a lot of information that will mismatch many other images
+that could be called upon.
+
+2. The other, more likely thing we will do is use MongoDB and store the information that we decide is necessary
+from parsing the JSON file that is returned from the Google Image Analysis.
+
+{
+  "faceAnnotations": [ # Although not every image will have face annotations, as not every image will contain
+					   # a face, we can use this section, and a more general label key like "face"
+    {
+      "boundingPoly": {
+        "vertices": [
+			# For this part, we will use a key "faceBoundingBox" and this will record the location of the face
+			# in relation to the rest of the photo, which can be analyzed to see if specific placements of one's 
+			# face in a picture can affect the number of likes one receives.
+        ]
+      },
+      "fdBoundingPoly": {
+        "vertices": [
+			# This part is also used in conjunction with the last part to locate the face
+        ]
+      },
+      "landmarks": [
+        # We will most likely not use this part of the function, as it locates specific parts of one's face
+		# such as the left eye pupil. However if we want to do some more extensive judging, we can check for
+		# things like if both eyes show up in the picture or not. Although we do believe distance between the
+		# nose and chin in relation to the rest of the face might be a little difficult to analyze and gather
+		# enough data to be relevant enough to give constructive criticism.
+		
+		# This section is more importantly used to garner information on emotion, which would go under the
+		# "emotion" key. We would like to analyze what emotions garner the best response from their followers.
+          
+  ],
+  "labelAnnotations": [
+    # This is the most important part of the JSON file, as it identifies what is the subject of the actual
+	# image. We will use the label key "labelAnnotations" to identify these, however images can have from one
+	# to 15 label annotations. Under the labelAnnotations key we will provide enough relevant keys based off
+	# of the relevance score that each key received. We will also put the score under these keys to show how
+	# relevant those objects were in the photos.
+  ],
+  "safeSearchAnnotation": {
+    # This section is useful for creating keys such as "Racy" and "Adult" and "Violence" and if the photo 
+	# contains imagery that is relevant to categories such as those.
+  },
+  "imagePropertiesAnnotation": {
+    "dominantColors": {
+      "colors": [
+        # This section will be used to analyze the general colors of the photos under the "colors" key. We
+		# will analyze what the dominant colors are, mostly paying attention to the most dominant color based off
+		# of a percentage amount that is displayed within the image. If an image is in complete black and white we
+		# would also use this section to determine that, as we believe black and white images warrant their own
+		# category notifying the user if a black and white image helps them receive more attention or not.
+        
+      },
+      {
+        "boundingPoly": {
+          "vertices": [
+            # This part is completely irrelevant to our task.
+          ]
+        },
+        
+      },
+      {
+        "boundingPoly": {
+          "vertices": [
+            # So is this.
+          ]
+        },
+        
+      }
+    ]
+  },
+  "webDetection": {
+    "webEntities": [
+      # This part will be used in conjunction with labelAnnotations as it does the same thing, however it scores in actual
+	  # different way sometimes. 
+      }
+    ],
+    "visuallySimilarImages": [
+      # This section won't be stored in the database, however there is possible potential for this category,
+	  # we could display some images from here to our user telling them that photos that look similar to
+	  # these could be of interest to them.
+    ],
+    "bestGuessLabels": [
+      {
+        "label": "water"
+		# This section simply contains the best labelAnnotations 
+      }
+    ]
+  }
+}
