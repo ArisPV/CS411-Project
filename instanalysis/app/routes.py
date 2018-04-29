@@ -50,7 +50,6 @@ def auth():
 		'code'          : code}
 	postRequest = Request(url, urlencode(fields).encode())
 	json = urlopen(postRequest).read().decode()
-	print(type(json))
 	obj = open('access_token.json', 'w')
 	obj.write(json)
 	obj.close()
