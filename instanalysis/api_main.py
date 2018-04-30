@@ -20,7 +20,7 @@ def api_main(access_token_json):
     if not check_user(username):
         list_img = get_list_of_img_id(username)
     
-    user_info = read_insta_json(insta_json_filedata, list_img)
+    user_info = read_insta_json(insta_json_data, list_img)
     #Iterate through all of the lists in user info
 
     for i in user_info:
