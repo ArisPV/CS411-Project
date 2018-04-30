@@ -40,3 +40,5 @@ def api_main(access_token_json):
     # didn't already exist on the database beforehand.
     
     update_db(username, user_info)
+
+    return username
