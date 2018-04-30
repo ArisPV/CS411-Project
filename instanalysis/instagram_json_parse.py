@@ -1,7 +1,5 @@
 import json
 
-json_file = open('testfile.json', 'r')
-json_file.close
 
 def read_insta_json(json_file):
     """ Runs all the helper functions below
@@ -14,9 +12,13 @@ def read_insta_json(json_file):
     for i in range(len(json_data['data'])):
         image_data = json_data['data'][i]
 
+        image_id = json_image_id(image_data)
+        # If image_id NOT in database: do the for loop, else ignore. If the
+        # returned user_info is [] then we already have every image. Call what
+        # we have from database, and graphs from cache if possible.
+
         if json_is_image(image_data):
             image_url = return_insta_image(image_data)
-            image_id = json_image_id(image_data)
             image_time = json_image_time(image_data)
             has_caption = json_has_caption(image_data)
             user_has_liked = json_user_has_liked(image_data)
