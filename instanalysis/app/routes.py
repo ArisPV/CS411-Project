@@ -7,7 +7,9 @@ from google_cloud_interface import analyze_file
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from secrets import give_secrets
+import ssl
 
+ssl._create_default_https_context = ssl._create_unverified_context
 #configuring photo stuff
 photos = UploadSet('photos', IMAGES)
 app.config['UPLOADED_PHOTOS_DEST'] = 'static/img'

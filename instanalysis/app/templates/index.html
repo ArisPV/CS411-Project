@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h1>Hi, {{ user.username }}!</h1>
-	<h2>This is the homepage</h2>
+    <head>
+      <link href="{{ url_for('static',filename='styles/style.css') }}" type="text/css" rel="stylesheet">
+      <title>Instagram Analyser</title>
+    </head>
+    <body  class="header">
+        <h1> WELCOME </h1>
+        <h2>Instagram analyser 1.0</h2>
+        <!-- <button class="button">Login with Instagram</button>  -->
+        <a href="/login" class="button">Login with Instagram</a>
+    </body>
 {% endblock %}
