@@ -30,14 +30,14 @@ def index():
 	logBool = check_login()
 	return render_template('index.html', title='Home', login=logBool)
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
-	logBool = check_login()
-	if request.method == 'POST' and 'photo' in request.files:
-		filename = photos.save(request.files['photo'])
-		results = analyze_file('static/img/' + filename)
-		return render_template('upload.html', title='Upload', file=filename, data=results, login=logBool)
-	return render_template('upload.html', title='Upload', login=logBool)
+# @app.route('/upload', methods=['GET', 'POST'])
+# def upload():
+# 	logBool = check_login()
+# 	if request.method == 'POST' and 'photo' in request.files:
+# 		filename = photos.save(request.files['photo'])
+# 		results = analyze_file('static/img/' + filename)
+# 		return render_template('upload.html', title='Upload', file=filename, data=results, login=logBool)
+# 	return render_template('upload.html', title='Upload', login=logBool)
 
 @app.route('/login')
 def login():
@@ -88,7 +88,8 @@ def logout():
 def success():
 	best5hastags      = dataAnalysis.goForItBaby()[0]
 	bestTimesString   = dataAnalysis.goForItBaby()[1]
-	return render_template('success.html', title='Donald J Trump', best5hastags = best5hastags, bestTimesString = bestTimesString )
+	logBool = check_login()
+	return render_template('success.html', title='Donald J Trump', best5hastags = best5hastags, bestTimesString = bestTimesString, login=logBool)
 
 
 
