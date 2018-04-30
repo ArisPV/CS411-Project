@@ -1,12 +1,13 @@
 <html>
 	<head>
+		<link href="{{ url_for('static',filename='css/style.css') }}" type="text/css" rel="stylesheet">
 		{% if title %}
 		<title>{{ title }} - Instanalysis</title>
 		{% else %}
 		<title>Instanalysis</title>
 		{% endif %}
 	</head>
-	<body>
+	<body class="header">
 		<div>Instanalysis: 
 			<a href="/index">Home</a> 
 			<a href="/upload">Upload</a> 

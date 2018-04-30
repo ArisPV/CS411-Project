@@ -1,0 +1,45 @@
+h1 {
+    margin: auto;
+    text-align: center;
+    line-height: 150px;
+    position: relative;
+    font-size: 100px;  
+    font-family: AvenirNext-Bold;
+ 
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(163,163,163,0.50);
+
+}
+
+h2 {
+    margin: auto;
+    text-align: center;
+    font-family: AvenirNext-Bold;
+
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(163,163,163,0.50);
+
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    position: relative;
+        font-family: AvenirNext-Bold;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+}
+
+
+.header {
+  background-image: linear-gradient(-180deg, #1933FF 0%, #880000 87%);
+  
+  background-size: cover;
+  height: 800px;
+  text-align: center; 
+}
+

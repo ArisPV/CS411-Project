@@ -2,3 +2,5 @@ Prototype/service_account.json
 *.json
 *.DS_Store
 *__pycache__
+*.jpeg
+*.jpg
