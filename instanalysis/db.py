@@ -1,5 +1,6 @@
 from flask_pymongo import PyMongo
 from flask import Flask
+import flask_pymongo
 
 app = Flask(__name__)
 mongo = PyMongo(app)
@@ -45,7 +46,7 @@ def output_db(username):
 	eight = mongo.db.username.distinct("comment")
 	nine = mongo.db.username.distinct("userTagged")
 	ten = mongo.db.username.distinct("gData")
-	output = [username]
+	output = []
 	for i in range(len(one)):
 		temp = []
 		temp.append(one[i])
