@@ -30,11 +30,12 @@ def index():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
 	user = {'username': 'Kiran'}
+	logBool = check_login()
 	if request.method == 'POST' and 'photo' in request.files:
 		filename = photos.save(request.files['photo'])
 		results = analyze_file('static/img/' + filename)
-		return render_template('upload.html', title='Upload', user=user, file=filename, data=results)
-	return render_template('upload.html', title='Upload', user=user)
+		return render_template('upload.html', title='Upload', user=user, file=filename, data=results, login=logBool)
+	return render_template('upload.html', title='Upload', user=user, login=logBool)
 
 @app.route('/login')
 def login():
@@ -68,7 +69,16 @@ def auth():
 		return render_template('index.html', title='Home', user=user, login=logBool)
 	else:
 		user = {'username': 'Kiran'}
-		logBool = check_login()
-		return render_template('index.html', title='Home', user=user, login=logBool)
+		return render_template('index.html', title='Home', user=user)
+
+@app.route('/logout')
+def logout():
+	session['login'] = False
+	obj = open('access_token.json', 'w')
+	obj.write('')
+	obj.close()
+	user = {'username': 'Kiran'}
+	return render_template('index.html', title='Home', user=user)
+
 
 

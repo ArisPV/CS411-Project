@@ -7,7 +7,15 @@
 		{% endif %}
 	</head>
 	<body>
-		<div>Instanalysis: <a href="/index">Home</a> <a href="/upload">Upload</a> <a href="/login">Log-In</a></div>
+		<div>Instanalysis: 
+			<a href="/index">Home</a> 
+			<a href="/upload">Upload</a> 
+			{% if login %}
+			<a href="/logout">Log-Out</a>
+			{% else %}
+			<a href="/login">Log-In</a>
+			{% endif %}
+		</div>
 		<hr>
 		{% block content %}{% endblock %}
 	</body>
