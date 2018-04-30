@@ -31,7 +31,7 @@ def update_db(username, output):
 			"userLiked": output[i][4], "imgLiked": output[i][5], "hashtages": output[i][6], 
 			"imgFilter": output[i][7], "comment": output[i][8], "userTagged": output[i][9], 
 			"gData": output[i][10]})
-	return "finish update"
+	#return "finish update"
 
 """ output everything in this collection with username in front"""
 def output_db(username):
