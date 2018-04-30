@@ -21,6 +21,18 @@ h2 {
 
 }
 
+h3 {
+    margin: auto;
+    text-align: center;
+    font-family: AvenirNext;
+    line-height: 50px;
+    font-size: 25px; 
+    color: #FFFFFF;
+    #text-shadow: 0 2px 4px rgba(163,163,163,0.50);
+
+}
+
+
 .button {
     background-color: #4CAF50; /* Green */
     border: none;
