@@ -17,6 +17,7 @@ configure_uploads(app, photos)
 
 #retrieving instagram client api id and password
 secrets = give_secrets()
+gdata = secrets['gdata']
 
 #managing login
 def check_login():
@@ -80,7 +81,7 @@ def success():
 	best5hastags      = dataAnalysis.goForItBaby()[0]
 	bestTimesString   = dataAnalysis.goForItBaby()[1]
 	logBool = check_login()
-	return render_template('success.html', title='Donald J Trump', best5hastags = best5hastags, bestTimesString = bestTimesString, login=logBool)
+	return render_template('success.html', title='Donald J Trump', best5hastags = best5hastags, bestTimesString = bestTimesString, gdata=gdata, login=logBool)
 
 
 
