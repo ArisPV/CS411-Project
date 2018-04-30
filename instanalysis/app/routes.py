@@ -25,19 +25,17 @@ def check_login():
 @app.route('/')
 @app.route('/index')
 def index():
-	user = {'username': 'Kiran'}
 	logBool = check_login()
-	return render_template('index.html', title='Home', user=user, login=logBool)
+	return render_template('index.html', title='Home', login=logBool)
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-	user = {'username': 'Kiran'}
 	logBool = check_login()
 	if request.method == 'POST' and 'photo' in request.files:
 		filename = photos.save(request.files['photo'])
 		results = analyze_file('static/img/' + filename)
-		return render_template('upload.html', title='Upload', user=user, file=filename, data=results, login=logBool)
-	return render_template('upload.html', title='Upload', user=user, login=logBool)
+		return render_template('upload.html', title='Upload', file=filename, data=results, login=logBool)
+	return render_template('upload.html', title='Upload', login=logBool)
 
 @app.route('/login')
 def login():
@@ -67,14 +65,12 @@ def auth():
 		#update login var
 		session['login'] = True
 		#go to homepage
-		user = {'username': 'Kiran'}
 		#redirect link to results page
 		#redirect = {'url':"/upload"}
 		redirect = "/upload"
-		return render_template('redirect.html', link=redirect, time=2)
+		return render_template('redirect.html', link=redirect, time=5)
 	else:
-		user = {'username': 'Kiran'}
-		return render_template('index.html', title='Home', user=user)
+		return render_template('index.html', title='Home')
 
 @app.route('/logout')
 def logout():
@@ -82,8 +78,7 @@ def logout():
 	obj = open('access_token.json', 'w')
 	obj.write('')
 	obj.close()
-	user = {'username': 'Kiran'}
-	return render_template('index.html', title='Home', user=user)
+	return render_template('index.html', title='Home')
 
 
 
