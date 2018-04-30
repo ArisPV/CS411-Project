@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+    <head>      
+        <link href="{{ url_for('static',filename='css/style.css') }}" type="text/css" rel="stylesheet">
+    </head>
+    <body class="header">
+        <h2>Here are your results:</h2>
+        <h3>Your most succesfull hastags are: {{ best5hastags }}</h3>
+        <h3><br></h3>
+        <h3>Best Hours to Post are between: {{ bestTimesString }}</h3>
+    </body>
+
+
+<!--         <p>Success Page</p> -->
+
+{% endblock %}

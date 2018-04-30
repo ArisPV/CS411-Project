@@ -6,6 +6,8 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from secrets import give_secrets
 import ssl
+import dataAnalysis
+from api_main import api_main
 
 ssl._create_default_https_context = ssl._create_unverified_context
 #configuring photo stuff
@@ -64,10 +66,12 @@ def auth():
 		obj.close()
 		#update login var
 		session['login'] = True
-		#go to homepage
+		#store token
+		session['token'] = json
+		#start the api calls here
+		#session['username'] = api_main(json)
 		#redirect link to results page
-		#redirect = {'url':"/upload"}
-		redirect = "/upload"
+		redirect = "/success"
 		return render_template('redirect.html', link=redirect, time=5)
 	else:
 		return render_template('index.html', title='Home')
@@ -79,6 +83,12 @@ def logout():
 	obj.write('')
 	obj.close()
 	return render_template('index.html', title='Home')
+
+@app.route('/success')
+def success():
+	best5hastags      = dataAnalysis.goForItBaby()[0]
+	bestTimesString   = dataAnalysis.goForItBaby()[1]
+	return render_template('success.html', title='Donald J Trump', best5hastags = best5hastags, bestTimesString = bestTimesString )
 
 
 
