@@ -8,6 +8,8 @@ def call_instagram_api(access_key):
 
     url = 'https://api.instagram.com/v1/users/self/?access_token=' + access_key
 
-    json_file = urlopen(url)
-
-    return json_file 
+    response = urlopen(url)
+    string = response.read().decode('utf-8')
+    json_data = json.loads(string)
+    
+    return json_data 

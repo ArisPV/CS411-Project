@@ -14,9 +14,7 @@ def api_main(access_token_json):
 
     username, access_token = get_token_and_username(access_token_json)
     
-    insta_json_file = call_instagram_api(access_token)
-    
-    insta_json_data = json.load(insta_json_file)
+    insta_json_data = call_instagram_api(access_token)
     
     list_img = []
     if not check_user(username):
