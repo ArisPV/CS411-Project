@@ -30,15 +30,6 @@ def index():
 	logBool = check_login()
 	return render_template('index.html', title='Home', login=logBool)
 
-# @app.route('/upload', methods=['GET', 'POST'])
-# def upload():
-# 	logBool = check_login()
-# 	if request.method == 'POST' and 'photo' in request.files:
-# 		filename = photos.save(request.files['photo'])
-# 		results = analyze_file('static/img/' + filename)
-# 		return render_template('upload.html', title='Upload', file=filename, data=results, login=logBool)
-# 	return render_template('upload.html', title='Upload', login=logBool)
-
 @app.route('/login')
 def login():
 	#redirect = {'url':"https://api.instagram.com/oauth/authorize/?client_id=" + secrets['client_id'] + "&redirect_uri=http://localhost:5000/auth&response_type=code"}
