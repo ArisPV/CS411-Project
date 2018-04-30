@@ -55,8 +55,8 @@ def analyze_file(filename):
 	open('response.json', 'w').close()
 	# now write to it
 	print(serialized, file=open('response.json','a'))
-	clean_data = json_parse_labels('response.json')
-	return clean_data
+	labels, is_spoof, is_racy, landmark, has_text, has_face, emotion = json_parse_labels('response.json')
+	return labels, is_spoof, is_racy, landmark, has_text, has_face, emotion
 
 
 

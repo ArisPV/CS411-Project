@@ -1,37 +1,35 @@
 import json
 
 
-def read_insta_json(json_file):
+def read_insta_json(json_data, list_of_image_ids):
     """ Runs all the helper functions below
     """
-
-    json_data = json.load(json_file)
 
     user_info = []
    
     for i in range(len(json_data['data'])):
         image_data = json_data['data'][i]
-
-        image_id = json_image_id(image_data)
-        # If image_id NOT in database: do the for loop, else ignore. If the
-        # returned user_info is [] then we already have every image. Call what
-        # we have from database, and graphs from cache if possible.
-
-        if json_is_image(image_data):
-            image_url = return_insta_image(image_data)
-            image_time = json_image_time(image_data)
-            has_caption = json_has_caption(image_data)
-            user_has_liked = json_user_has_liked(image_data)
-            image_likes = json_how_many_likes(image_data)
-            hashtags = json_hashtags(image_data)
-            image_filter = json_filter(image_data)
-            comment_count = json_comment_count(image_data)
-            are_users_tagged = json_users_tagged_in_photo(image_data)
         
-            user_info.append([image_url, image_id, image_time, has_caption, user_has_liked,
+        image_id = json_image_id(image_data)
+        
+        if image_id not in list_of_image_ids:
+
+            if json_is_image(image_data):
+                image_url = return_insta_image(image_data)
+                image_time = json_image_time(image_data)
+                has_caption = json_has_caption(image_data)
+                user_has_liked = json_user_has_liked(image_data)
+                image_likes = json_how_many_likes(image_data)
+                hashtags = json_hashtags(image_data)
+                image_filter = json_filter(image_data)
+                comment_count = json_comment_count(image_data)
+                are_users_tagged = json_users_tagged_in_photo(image_data)
+        
+                user_info.append([image_url, image_id, image_time, has_caption, user_has_liked,
                 image_likes, hashtags, image_filter, comment_count, are_users_tagged])
         
     return user_info
+
 def return_insta_image(image_data):
     """ Takes the JSON file provided by Instagram API and returns the link to
         the image.

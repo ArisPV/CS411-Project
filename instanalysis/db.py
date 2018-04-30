@@ -1,7 +1,12 @@
 from flask_pymongo import PyMongo
+from flask import Flask
+
+app = Flask(__name__)
 mongo = PyMongo(app)
 
-DBQuery.shellBatchSize = 100
+# I COMMENTED THIS LINE OUT BECAUSE I COULDN'T FIND OUT WHERE IT WAS IMPORTED
+# FROM. IMPORT THE FUNCTION, AND THEN UNCOMMENT.
+#DBQuery.shellBatchSize = 100
 
 """ check if this user is already in the database
 	return True if he/she is in the database
@@ -11,7 +16,7 @@ def check_user(username):
 	collection = mongo.db.list_collection_names()
 	if username in collection:
 		return True
-	else
+	else:
 		return False
 
 """ get all img id for this user and return a list of it """

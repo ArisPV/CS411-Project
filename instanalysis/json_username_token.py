@@ -1,7 +1,5 @@
 import json
 
-json_file = open('poof.json', 'r')
-json_file.close
 
 def get_token_and_username(json_file):
 
