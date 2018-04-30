@@ -3,4 +3,11 @@
 {% block content %}
 	<h1>Hi, {{ user.username }}!</h1>
 	<h2>This is the homepage</h2>
+		
+	{% if login %}
+	
+	{% else %}
+	<h1>YOU NEED TO LOG IN</h1>
+	{% endif %}
+
 {% endblock %}
