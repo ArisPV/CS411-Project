@@ -41,8 +41,9 @@ def upload():
 
 @app.route('/login')
 def login():
-	redirect = {'url':"https://api.instagram.com/oauth/authorize/?client_id=" + secrets['client_id'] + "&redirect_uri=http://localhost:5000/auth&response_type=code"}
-	return render_template('redirect.html', link=redirect)
+	#redirect = {'url':"https://api.instagram.com/oauth/authorize/?client_id=" + secrets['client_id'] + "&redirect_uri=http://localhost:5000/auth&response_type=code"}
+	redirect = "https://api.instagram.com/oauth/authorize/?client_id=" + secrets['client_id'] + "&redirect_uri=http://localhost:5000/auth&response_type=code"
+	return render_template('redirect.html', link=redirect, time=0)
 
 @app.route('/auth', methods=['GET'])
 def auth():
@@ -67,8 +68,10 @@ def auth():
 		session['login'] = True
 		#go to homepage
 		user = {'username': 'Kiran'}
-		logBool = check_login()
-		return render_template('index.html', title='Home', user=user, login=logBool)
+		#redirect link to results page
+		#redirect = {'url':"/upload"}
+		redirect = "/upload"
+		return render_template('redirect.html', link=redirect, time=2)
 	else:
 		user = {'username': 'Kiran'}
 		return render_template('index.html', title='Home', user=user)

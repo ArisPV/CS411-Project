@@ -1,9 +1,11 @@
 <html>
 	<head>
 		<title>Instanalysis</title>
-		<meta http-equiv="Refresh" content="0; url={{ link.url }}">
+		<link href="{{ url_for('static',filename='css/style.css') }}" type="text/css" rel="stylesheet">
+		<meta http-equiv="Refresh" content="{{ time }}; url={{ link }}">
 	</head>
-	<body>
-		<h4>...redirecting...</h4>
+	<body class="header">
+		<h4>...loading...</h4>
+		<img src="{{ url_for('static',filename='img/perrydbucs.jpg') }}">
 	</body>
 </html>
