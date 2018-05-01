@@ -6,7 +6,7 @@ def call_instagram_api(access_key):
         key.
     """
 
-    url = 'https://api.instagram.com/v1/users/self/?access_token=' + access_key
+    url = 'https://api.instagram.com/v1/users/self/media/recent/?access_token=' + access_key
 
     response = urlopen(url)
     string = response.read().decode('utf-8')
