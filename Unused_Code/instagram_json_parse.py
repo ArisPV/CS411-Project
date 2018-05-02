@@ -6,7 +6,7 @@ def read_insta_json(json_data, list_of_image_ids):
     """
 
     user_info = []
-    #print(json_data)
+   
     for i in range(len(json_data['data'])):
         image_data = json_data['data'][i]
         
@@ -27,8 +27,6 @@ def read_insta_json(json_data, list_of_image_ids):
         
                 user_info.append([image_url, image_id, image_time, has_caption, user_has_liked,
                 image_likes, hashtags, image_filter, comment_count, are_users_tagged])
-        # else:
-        #     user_info.append(image_data)
         
     return user_info
 

@@ -1,15 +1,35 @@
 import json
 from google.protobuf.json_format import MessageToJson
 
-# Contains a bunch of helper functions that parse through different JSONs to find
-# relevant information.
+def json_parse(json_file):
+    """ This calls all of the JSON parsing helper functions in this file.
+    """
 
-def json_parse_labels(json_file):
+    json_data = json.load(json_file)
+    
+    labels = json_parse_labels(json_data)
+    is_spoof = json_is_spoof(json_data)
+    is_racy = json_is_racy(json_data)
+    if(json_has_landmark(json_data)):
+        landmark = json_landmark(json_data)
+    else:
+        landmark = None
+    has_text = json_has_text(json_data)
+    has_face = json_has_face(json_data)
+    if has_face:
+        emotion = json_face_emotion(json_data)
+    else:
+        emotion = None
+
+    # Do a if landmark == None if you want to ascertain whether or not there
+    # is a landmark in the image.
+    return labels, is_spoof, is_racy, landmark, has_text, has_face, emotion
+
+def json_parse_labels(json_data):
     """ Parses the Label Annotations from the Google Cloud Image JSON file
     """
-    
-    json_data = json.loads(json_file)
-    label_annotations = json_data['labelAnnotations']
+    jsondata = json.load(json_data)
+    label_annotations = jsondata['labelAnnotations']
     label_dict = {}
     
     for i in label_annotations:
@@ -19,15 +39,16 @@ def json_parse_labels(json_file):
     if label_dict == {}:
         label_dict[label_annotations[0]['description']] = top_label_1_score = label_annotations[0]['score']
     
+    #print("\n\n\n\n\n\n\nlabel dict = ", label_dict)
+
     return label_dict
 
 
-def json_is_spoof(json_file):
+def json_is_spoof(json_data):
     """ Detects if the image is a spoof image (meme) from the Google Cloud Image
         JSON file
     """
 
-    json_data = json.loads(json_file)
     safeSearch_annotations = json_data['safeSearchAnnotation']
 
     if safeSearch_annotations['spoof'] == 'VERY_LIKELY':
@@ -35,75 +56,62 @@ def json_is_spoof(json_file):
 
     return False
 
-def json_is_racy(json_file):
+def json_is_racy(json_data):
     """ Detects if the image is a racy image from the Google Cloud Image JSON file
     """
 
-    json_data = json.loads(json_file)
     safeSearch_annotations = json_data['safeSearchAnnotation']
 
-    if safeSearch_annotations['adult'] == 'VERY_LIKELY':
+    if safeSearch_annotations['racy'] == 'VERY_LIKELY':
         return True
 
     return False
 
-def json_has_landmark(json_file):
+def json_has_landmark(json_data):
     """ Detects if the image contains a landmark using the Google Cloud Image JSON
     file.
     """
 
-    json_data = json.loads(json_file)
     return 'landmarkAnnotations' in json_data
 
-def json_landmark(json_file):
+def json_landmark(json_data):
     """ Detects what the landmark is using the Google Cloud Image JSON file
     """
-
-    json_data = json.loads(json_file)
+    
+    if not(json_has_landmark(json_data)):
+        return ('There is no landmark.')
 
     landmark_annotations = json_data['landmarkAnnotations']
 
     return landmark_annotations[0]['description']
 
-def json_has_text(json_file):
+def json_has_text(json_data):
     """ Detects if the image has text using Google Cloud Image JSON file
     """
 
-    json_data = json.loads(json_file)
     return 'textAnnotations' in json_data
 
-def json_has_face(json_file):
+def json_has_face(json_data):
     """ Detects if the image contains a face using Google Cloud image JSON file
     """
 
-    json_data = json.loads(json_file)
     return 'faceAnnotations' in json_data
 
-def json_face_emotion(json_file):
+def json_face_emotion(json_data):
     """ Detects the emotion of the face using Google Cloud image JSON file
     """
 
-    json_data = json.loads(json_file)
+    if not(json_has_face(json_data)):
+        return ('There is no face.')
     
     face_annotations = json_data['faceAnnotations']
     likelihood_name = {'UNKNOWN': 0, 'VERY_UNLIKELY': 1, 'UNLIKELY': 2,
                        'POSSIBLE': 3, 'LIKELY': 4, 'VERY_LIKELY': 5}
 
-    # This JSON can be formatted a number of ways depending on how many
-    # people can be in the image at once. Since grabbing everyone's emotions
-    # and finding a good balance of their emotions was slightly tedious, I just
-    # opted to do the first detected person's emotion.
-    if type(face_annotations) == list:
-        joy = [likelihood_name[face_annotations[0]['joyLikelihood']], 'joy']
-        sorrow = [likelihood_name[face_annotations[0]['sorrowLikelihood']], 'sorrow']
-        anger = [likelihood_name[face_annotations[0]['angerLikelihood']], 'anger']
-        surprise = [likelihood_name[face_annotations[0]['surpriseLikelihood']], 'surprise']
-    # If there is only one person in the image.
-    else:
-        joy = [likelihood_name[face_annotations['joyLikelihood']], 'joy']
-        sorrow = [likelihood_name[face_annotations['sorrowLikelihood']], 'sorrow']
-        anger = [likelihood_name[face_annotations['angerLikelihood']], 'anger']
-        surprise = [likelihood_name[face_annotations['surpriseLikelihood']], 'surprise']
+    joy = [likelihood_name[face_annotations['joyLikelihood']], 'joy']
+    sorrow = [likelihood_name[face_annotations['sorrowLikelihood']], 'sorrow']
+    anger = [likelihood_name[face_annotations['angerLikelihood']], 'anger']
+    surprise = [likelihood_name[face_annotations['surpriseLikelihood']], 'surprise']
 
     emotion = max([joy, sorrow, anger, surprise])
 
