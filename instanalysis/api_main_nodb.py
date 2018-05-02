@@ -1,17 +1,16 @@
-# Import literally everything.
+# Import all the helper functions to parse/ make API calls.
 from json_username_token import get_token_and_username
 from instagram_json_call import call_instagram_api
-import instagram_json_parse
-from db import check_user, get_list_of_img_id, update_db
-import download_image
+from instagram_json_parse import read_insta_json
+#from db import check_user, get_list_of_img_id, update_db
+from download_image import download_image
 from google_cloud_interface import analyze_file
 import json
 
 
 def api_main(access_token_json):
-    """ Takes the JSON file returned from the Instagram OAuth and updates the
-        database with that data and returns the username of the user so other
-        functions can call that in the future.
+    """ Takes the JSON file returned from the Instagaram OAuth and returns the data from
+        that user's most recent media that he/her has posted.
     """
 
     username, access_token = get_token_and_username(access_token_json)
@@ -19,8 +18,8 @@ def api_main(access_token_json):
     insta_json_data = call_instagram_api(access_token)
     
     list_img = []
-    if not check_user(username):
-        list_img = get_list_of_img_id(username)
+    #if not check_user(username):
+    #    list_img = get_list_of_img_id(username)
     
     user_info = read_insta_json(insta_json_data, list_img)
     #Iterate through all of the lists in user info
@@ -39,6 +38,6 @@ def api_main(access_token_json):
     # The return values from this would only be the newly updated images that
     # didn't already exist on the database beforehand.
     
-    update_db(username, user_info)
+    #update_db(username, user_info)
 
-    return username
+    return user_info
