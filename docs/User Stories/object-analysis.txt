@@ -1,11 +1,9 @@
 Object analysis story
 
-As a logged-in user, I want to navigate to a "Image-object analysis" page that displays graphically how successful my posts are based off of trends of what objects the image contains, so that I can learn what content interests my followers the most.
+As a logged-in user, I want to navigate to a "Image-object analysis" page that displays how successful my posts are based off of trends of what objects the image contains, so that I can learn what content interests my followers the most.
 
 User must be logged in (See log in story)
 The user clicks a button or meny item to navigate to the object analysis page.
-The page displays a graph that shows what objects in the images are prevalent, based off of their posting data.
-On the x axis, the objects in the images are shown; on the y axis, the # of interactions (likes+comments). 
-Each of the objects that are noted in the pictures will be indicated in the graph by a bar stretching from the bottom up, indicating popularity based off of the interactions.
-If the user has not made any posts, a message appears instead.
-The message indicates to the user that they need to have already made posts to use this feature. 
+The page displays a list of objects that the user finds the most success with in their Instagram posts.
+The list will only display the most successful options, so it is not reccomended to give the user results that could fool them into making posts that would detract from their likes and attention received on an Instagram post.
+

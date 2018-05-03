@@ -1,97 +1,43 @@
-For our planned data models, we decided on doing one of two possible solutions.
-
-1. We would use the Instagram username as a key for each user, and have the data stored in MongoDB using GridFS
-in the form of images. This would mean that we would have to call our backend function every single time we
-decided to run the algorithm on the user, and that would run the algorithm for each individual picture, which 
-would be incredibly inefficient. However there are many possible parameters that the Google Image Analysis API
-can possibly present us, so it is difficult to store a lot of information that will mismatch many other images
-that could be called upon.
-
-2. The other, more likely thing we will do is use MongoDB and store the information that we decide is necessary
-from parsing the JSON file that is returned from the Google Image Analysis.
+We will be storing our data in MongoDB in the following JSON format.
 
 {
-  "faceAnnotations": [ # Although not every image will have face annotations, as not every image will contain
-					   # a face, we can use this section, and a more general label key like "face"
-    {
-      "boundingPoly": {
-        "vertices": [
-			# For this part, we will use a key "faceBoundingBox" and this will record the location of the face
-			# in relation to the rest of the photo, which can be analyzed to see if specific placements of one's 
-			# face in a picture can affect the number of likes one receives.
-        ]
-      },
-      "fdBoundingPoly": {
-        "vertices": [
-			# This part is also used in conjunction with the last part to locate the face
-        ]
-      },
-      "landmarks": [
-        # We will most likely not use this part of the function, as it locates specific parts of one's face
-		# such as the left eye pupil. However if we want to do some more extensive judging, we can check for
-		# things like if both eyes show up in the picture or not. Although we do believe distance between the
-		# nose and chin in relation to the rest of the face might be a little difficult to analyze and gather
-		# enough data to be relevant enough to give constructive criticism.
-		
-		# This section is more importantly used to garner information on emotion, which would go under the
-		# "emotion" key. We would like to analyze what emotions garner the best response from their followers.
-          
-  ],
-  "labelAnnotations": [
-    # This is the most important part of the JSON file, as it identifies what is the subject of the actual
-	# image. We will use the label key "labelAnnotations" to identify these, however images can have from one
-	# to 15 label annotations. Under the labelAnnotations key we will provide enough relevant keys based off
-	# of the relevance score that each key received. We will also put the score under these keys to show how
-	# relevant those objects were in the photos.
-  ],
-  "safeSearchAnnotation": {
-    # This section is useful for creating keys such as "Racy" and "Adult" and "Violence" and if the photo 
-	# contains imagery that is relevant to categories such as those.
-  },
-  "imagePropertiesAnnotation": {
-    "dominantColors": {
-      "colors": [
-        # This section will be used to analyze the general colors of the photos under the "colors" key. We
-		# will analyze what the dominant colors are, mostly paying attention to the most dominant color based off
-		# of a percentage amount that is displayed within the image. If an image is in complete black and white we
-		# would also use this section to determine that, as we believe black and white images warrant their own
-		# category notifying the user if a black and white image helps them receive more attention or not.
-        
-      },
-      {
-        "boundingPoly": {
-          "vertices": [
-            # This part is completely irrelevant to our task.
-          ]
-        },
-        
-      },
-      {
-        "boundingPoly": {
-          "vertices": [
-            # So is this.
-          ]
-        },
-        
-      }
-    ]
-  },
-  "webDetection": {
-    "webEntities": [
-      # This part will be used in conjunction with labelAnnotations as it does the same thing, however it scores in actual
-	  # different way sometimes. 
-      }
-    ],
-    "visuallySimilarImages": [
-      # This section won't be stored in the database, however there is possible potential for this category,
-	  # we could display some images from here to our user telling them that photos that look similar to
-	  # these could be of interest to them.
-    ],
-    "bestGuessLabels": [
-      {
-        "label": "water"
-		# This section simply contains the best labelAnnotations 
-      }
-    ]
-  }
+  "username": [
+	[
+		"url":  "",
+		"id": "",
+		"time": ""
+		"has_caption": "",
+		"user_has_liked": ""
+		"likes": "",
+		"hashtags": "",
+		"filter": "",
+		"comment_count": "",
+		"are_users_tagged": "",
+		{ "label": "", "...":, ...
+		}
+	],
+	[ "each list in this represents one image's data"
+	],
+	[ "..."
+	], 
+	...
+  ]
 }
+
+The username field means that we take the person's instagram name to store all of their data. Then we create a list
+of lists, each list holding the data from a single image/media page from Instagram and Google Image API calls.
+The data contains the url of the image, which we can use to get the image. The ID is what makes each image unique,
+and we use that to check to make sure that we don't have duplicate images in the database. The time is the time
+the image was posted. The has_caption field indicates whether or not the image has a caption, in case we wanted
+to use that as an indicator of whether or not an image was successful. The user_has_liked field indicates whether or
+not the user themself had liked their own post, mostly there to be cheeky, but if we want to find a correlation
+between total likes and whether the user liked their own post or not we could use it. The likes field is simply
+the total amount of likes, which is used for the analysis of the success of the picture, although we could use
+other things as well. Hashtags are the hashtags of the post, which can be analyzed seperately from the content of
+the picture or using it as an indicator of the success of the picture as well. The filter is the filter that was 
+used on the picture. It returns "Normal" if there was no filter. The comment_count field is the number of comments
+on the post, which can also be used as an indicator alongside the likes. The are_users_tagged field checks to
+see if you tagged any users in the Instagram post, again, it can be used as an indicator of success of the post.
+And there is a dictionary as the last variable in each image's thing which contains the labels that the Google
+Image API returned as being what the picture most likely is about. If the label is above a 90% likeliness then it is
+added to the dictionary, otherwise we only take the highest likeliness.

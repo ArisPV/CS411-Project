@@ -1,11 +1,8 @@
 Time analysis story 
 
-As a logged-in user, I want to navigate to a "posting-time analysis" page that displays graphically how successful my posts are in attracting likes and comments based on their time of posting, so that I can learn which time of day to make new posts.
+As a logged-in user, I want to navigate to a "posting-time analysis" page that displays how successful my posts are in attracting likes and comments based on their time of posting, so that I can learn which time of day to make new posts.
 
 User must be logged in (see log-in story). 
 The user clicks a button or menu item to navigate to the time analysis page. 
-The page displays a bar graph generated from their posting data. 
-On the x axis, the time of day (from 00:00 to 23:00) appears; on the y axis, the # of interactions (likes+comments). 
-Each of the users recent posts will be represented with a bar that stretches from the bottom up to the post's number of interactions. 
-If the user has not made any posts, a message appears instead.
-The message indicates to the user that they need to have already made posts to use this feature. 
+The user will be directed to a page that displays what their most successful posting time is.
+The time will be displayed as an hourly thing, so that it is more easy to generalize what time the user should be posting around.
