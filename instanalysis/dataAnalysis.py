@@ -24,11 +24,11 @@ def goForItBaby():
         
 
     print(images)
-    sortedByLikes = sorted(images,key=lambda l:l[2], reverse=True)
+    sortedByLikes = sorted(images,key=lambda l:l[2], reverse=True) #sort the imges by number of likes
     best_hastags = []
 
     times = []
-    for i in range(len(images)):
+    for i in range(len(images)): #convert unixtime to hour of day
 
         date = datetime.datetime.fromtimestamp(int(sortedByLikes[i][1]))
         hour = date.hour
@@ -40,10 +40,11 @@ def goForItBaby():
     #print(times)
 
 
-    hist = np.histogram(times, bins=list(range(0, 25)))
+    hist = np.histogram(times, bins=list(range(0, 25)))#create histogram for hours of days as buckets
 
 
-    for i in range(len(images)):
+
+    for i in range(len(images)): #find most common hastags used
         best_hastags += sortedByLikes[i][3]
     best_hastag_counts = Counter(best_hastags)
 
@@ -54,15 +55,15 @@ def goForItBaby():
 
     timesHistogramValues = hist[0]
     timesHistogramBins   = hist[1]
-
-    bestTimesIndexes = timesHistogramValues.argsort()[-3:][::-1]
+ 
+    bestTimesIndexes = timesHistogramValues.argsort()[-3:][::-1] #get best 3 buckets from histogram
     bestTimesString =   str(timesHistogramBins[bestTimesIndexes[0]]) + " - " + str(timesHistogramBins[bestTimesIndexes[0] + 1]) + ", " + \
                         str(timesHistogramBins[bestTimesIndexes[1]]) + " - " + str(timesHistogramBins[bestTimesIndexes[1] + 1]) + " and "+ \
                         str(timesHistogramBins[bestTimesIndexes[2]]) + " - " + str(timesHistogramBins[bestTimesIndexes[2] + 1]) 
     
 
 
-
+    #find most succesfull 5 hastags
     li = [(value,key) for key, value in best_hastag_counts.items()]
     li.sort()
     m = 5
@@ -73,12 +74,13 @@ def goForItBaby():
     for image in sortedByLikes:
         googleResults += image[-1]
 
-    print(googleResults)
+
+
+
+    #get 3 res as googles best maches in most liked images
     res1 = most_common(googleResults)
     googleResults = list(filter(lambda a: a != res1, googleResults))
     print(res1)
-
-
 
     res2 = most_common(googleResults)
     googleResults = list(filter(lambda a: a != res2, googleResults))
@@ -91,11 +93,9 @@ def goForItBaby():
 
 
 
-    #flattened_list = [y for x in list_of_lists for y in x]
 
 
-
-
+    #return all findings
     return (best5hastags,bestTimesString,mostCommonGogleResults) #dictionary with key as hastag and val as number of occurance
 
 
